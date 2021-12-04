@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dtos/create-task.dto';
+import { GetTasksFilterDto } from './dtos/get-tasks-filter.dto';
 
 @Injectable()
 export class TasksService {
@@ -9,6 +10,25 @@ export class TasksService {
 
   find() {
     return this.tasks;
+  }
+
+  findWithFilters(filterDto: GetTasksFilterDto) {
+    const { status, search } = filterDto;
+    let tasks = this.find();
+
+    if (status) {
+      tasks = tasks.filter((task) => task.status === status);
+    }
+
+    if (search) {
+      tasks = tasks.filter((task) => {
+        if (task.title.includes(search) || task.description.includes(search)) {
+          return true;
+        }
+      });
+    }
+
+    return tasks;
   }
 
   remove(id: string) {

@@ -1,13 +1,16 @@
 ### Get all tasks
 GET http://localhost:3000/tasks
 
+### Get filtered tasks
+GET http://localhost:3000/tasks?search=sometask
+
 ### Create a new task
 POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
-  "title": "task 1",
-  "description": "task"
+  "title": "task 3",
+  "description": "task 3"
 }
 
 ### Get a task by id
@@ -15,3 +18,11 @@ GET http://localhost:3000/tasks/1
 
 ### Delete a task
 DELETE http://localhost:3000/tasks/1
+
+### Update a task
+PATCH http://localhost:3000/tasks/1/status
+Content-Type: application/json
+
+{
+  "status": "CLOSED"
+}
