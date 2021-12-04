@@ -17,36 +17,27 @@ import { TasksService } from './tasks.service';
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
-  @Get(':id')
-  getTaskbyId(@Param('id') id: string) {
+  @Get('/:id')
+  findTask(@Param('id') id: string) {
     return this.tasksService.findOne(id);
   }
 
-  @Patch(':id/status')
-  updateTaskStatus(
+  @Delete('/:id')
+  removeTask(@Param('id') id: string) {
+    return this.tasksService.remove(id);
+  }
+
+  @Patch('/:id')
+  updateTask(
     @Param('id') id: string,
-    @Body() updateStatusDto: UpdateTaskStatusDto,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
   ) {
-    const { status } = updateStatusDto;
+    const { status } = updateTaskStatusDto;
     return this.tasksService.update(id, status);
   }
 
-  @Get()
-  getTasks(@Query() filterDto: GetTasksFilterDto) {
-    if (Object.keys(filterDto).length) {
-      return this.tasksService.findWithFilters(filterDto);
-    }
-
-    return this.tasksService.find();
-  }
-
   @Post()
-  createTask(@Body() body: CreateTaskDto) {
-    return this.tasksService.create(body);
-  }
-
-  @Delete()
-  deleteTask(@Param('id') id: string) {
-    return this.tasksService.remove(id);
+  createTask(@Body() createTaskDto: CreateTaskDto) {
+    return this.tasksService.create(createTaskDto);
   }
 }
