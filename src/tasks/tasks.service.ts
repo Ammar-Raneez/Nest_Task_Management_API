@@ -20,6 +20,10 @@ export class TasksService {
     return task;
   }
 
+  find(filterDto: GetTasksFilterDto) {
+    return this.tasksRepository.getTasks(filterDto);
+  }
+
   create(createTaskDto: CreateTaskDto) {
     return this.tasksRepository.createTask(createTaskDto);
   }

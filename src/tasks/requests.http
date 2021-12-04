@@ -2,15 +2,15 @@
 GET http://localhost:3000/tasks
 
 ### Get filtered tasks
-GET http://localhost:3000/tasks?search=sometask
+GET http://localhost:3000/tasks?search=31
 
 ### Create a new task
 POST http://localhost:3000/tasks
 Content-Type: application/json
 
 {
-  "title": "task 31",
-  "description": "task 31"
+  "title": "task 30",
+  "description": "task 30"
 }
 
 ### Get a task by id

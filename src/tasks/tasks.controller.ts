@@ -40,4 +40,9 @@ export class TasksController {
   createTask(@Body() createTaskDto: CreateTaskDto) {
     return this.tasksService.create(createTaskDto);
   }
+
+  @Get()
+  getTasks(@Query() filterDto: GetTasksFilterDto) {
+    return this.tasksService.find(filterDto);
+  }
 }
