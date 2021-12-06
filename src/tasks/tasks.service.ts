@@ -21,8 +21,8 @@ export class TasksService {
     return task;
   }
 
-  find(filterDto: GetTasksFilterDto) {
-    return this.tasksRepository.getTasks(filterDto);
+  find(filterDto: GetTasksFilterDto, user: User) {
+    return this.tasksRepository.getTasks(filterDto, user);
   }
 
   create(createTaskDto: CreateTaskDto, user: User) {

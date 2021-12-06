@@ -47,7 +47,7 @@ export class TasksController {
   }
 
   @Get()
-  getTasks(@Query() filterDto: GetTasksFilterDto) {
-    return this.tasksService.find(filterDto);
+  getTasks(@Query() filterDto: GetTasksFilterDto, @GetUser() user: User) {
+    return this.tasksService.find(filterDto, user);
   }
 }

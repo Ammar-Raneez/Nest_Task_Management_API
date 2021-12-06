@@ -20,11 +20,12 @@ export class TasksRepository extends Repository<Task> {
     return this.save(task);
   }
 
-  async getTasks(filterDto: GetTasksFilterDto) {
+  async getTasks(filterDto: GetTasksFilterDto, user: User) {
     const { status, search } = filterDto;
 
     // will use 'task' as our object to check
     const query = this.createQueryBuilder('task');
+    query.where({ user });
     if (status) {
       // check if the 'task' status is equal to the filter status (:status)
       query.andWhere('task.status = :status', { status });
@@ -33,7 +34,7 @@ export class TasksRepository extends Repository<Task> {
     if (search) {
       // check if the search terms is included in title or description, doesnt have to be complete match, (therefore automatic search filter can happen)
       query.andWhere(
-        'LOWER(task.title) LIKE :search OR LOWER(task.description) LIKE LOWER(:search)',
+        '(LOWER(task.title) LIKE :search OR LOWER(task.description) LIKE LOWER(:search))',
 
         // not looking for exact thing
         { search: `%${search}%` }
