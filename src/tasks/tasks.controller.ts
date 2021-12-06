@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
@@ -20,6 +21,8 @@ import { TasksService } from './tasks.service';
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
+  // TasksController as the context
+  private logger = new Logger('TasksController');
   constructor(private readonly tasksService: TasksService) {}
 
   @Get('/:id')
@@ -44,11 +47,23 @@ export class TasksController {
 
   @Post()
   createTask(@Body() createTaskDto: CreateTaskDto, @GetUser() user: User) {
+    this.logger.verbose(
+      `User: ${user.username} creating a new task: Data: ${JSON.stringify(
+        createTaskDto,
+      )}`,
+    );
+
     return this.tasksService.create(createTaskDto, user);
   }
 
   @Get()
   getTasks(@Query() filterDto: GetTasksFilterDto, @GetUser() user: User) {
+    this.logger.verbose(
+      `User: ${user.username} retrieving all tasks. Filters: ${JSON.stringify(
+        filterDto,
+      )}`,
+    );
+
     return this.tasksService.find(filterDto, user);
   }
 }
