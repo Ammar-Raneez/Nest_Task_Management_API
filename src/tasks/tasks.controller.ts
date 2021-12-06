@@ -23,8 +23,8 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get('/:id')
-  findTask(@Param('id') id: string) {
-    return this.tasksService.findOne(id);
+  findTask(@Param('id') id: string, @GetUser() user: User) {
+    return this.tasksService.findOne(id, user);
   }
 
   @Delete('/:id')

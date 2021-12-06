@@ -12,8 +12,8 @@ export class TasksService {
     @InjectRepository(TasksRepository) private tasksRepository: TasksRepository,
   ) {}
 
-  async findOne(id: string) {
-    const task = await this.tasksRepository.findOne(id);
+  async findOne(id: string, user: User) {
+    const task = await this.tasksRepository.findOne({ where: { id, user } });
     if (!task) {
       throw new NotFoundException(`Task of id ${id} not found`);
     }
