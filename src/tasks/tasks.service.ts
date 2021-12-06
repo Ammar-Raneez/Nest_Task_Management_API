@@ -29,15 +29,15 @@ export class TasksService {
     return this.tasksRepository.createTask(createTaskDto, user);
   }
 
-  async remove(id: string) {
+  async remove(id: string, user: User) {
     const result = await this.tasksRepository.delete(id);
     if (result.affected === 0) {
       throw new NotFoundException(`Task of id ${id} not found`);
     }
   }
 
-  async update(id: string, status: TaskStatus) {
-    const task = await this.findOne(id);
+  async update(id: string, status: TaskStatus, user: User) {
+    const task = await this.findOne(id, user);
     task.status = status;
     return this.tasksRepository.save(task);
   }

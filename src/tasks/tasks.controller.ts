@@ -28,17 +28,18 @@ export class TasksController {
   }
 
   @Delete('/:id')
-  removeTask(@Param('id') id: string) {
-    return this.tasksService.remove(id);
+  removeTask(@Param('id') id: string, @GetUser() user: User) {
+    return this.tasksService.remove(id, user);
   }
 
   @Patch('/:id')
   updateTask(
     @Param('id') id: string,
     @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+    @GetUser() user: User,
   ) {
     const { status } = updateTaskStatusDto;
-    return this.tasksService.update(id, status);
+    return this.tasksService.update(id, status, user);
   }
 
   @Post()
