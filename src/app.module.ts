@@ -26,7 +26,7 @@ import { configValidationSchema } from './config.schema';
       },
     }),
     ConfigModule.forRoot({
-      envFilePath: [`.env.stage.${process.env.STAGE}`],
+      envFilePath: [`.env.${process.env.STAGE}`],
 
       // environment variable validation
       validationSchema: configValidationSchema,
